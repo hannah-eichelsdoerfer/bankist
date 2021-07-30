@@ -29,6 +29,29 @@ const account4 = {
 
 const accounts = [account1, account2, account3, account4];
 
+// Computing Usernames
+// accounts.forEach(account => {
+//   account.username = account.owner
+//     .toLowerCase()
+//     .split(" ")
+//     .map(name => name[0]) // implicit return
+//     .join("");
+// });
+// console.log(accounts);
+
+const createUsernames = (accs) => {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(" ")
+      .map(name => name[0]) // implicit return
+      .join("");
+  });
+};
+createUsernames(accounts);
+console.log(accounts);
+
+// Displaying the Transactions in the DOM
 const transactionsContainer = document.querySelector(".transactions");
 
 const displayTransactions = function(transactions) {
