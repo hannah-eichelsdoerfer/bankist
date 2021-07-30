@@ -51,6 +51,43 @@ const createUsernames = (accs) => {
 createUsernames(accounts);
 console.log(accounts);
 
+// Calculate and Display the Balance
+const balanceElement = document.querySelector("#balance-value");
+const calcDisplayBalance = (transactions => {
+  const balance = transactions.reduce((acc, transaction) => acc + transaction, 0);
+  balanceElement.textContent = `${balance}€`
+});
+
+calcDisplayBalance(account1.transactions);
+
+// Summary Display
+const inSummaryElement = document.querySelector("#summary_value_income");
+const outSummaryElement = document.querySelector("#summary_value_outgoing");
+const interestSummaryElement = document.querySelector("#summary_value_interest");
+
+const calcDisplaySummary = (transactionList) => {
+  const income = transactionList
+    .filter(mov => mov > 0)
+    .reduce((acc, cur) => acc + cur, 0);
+  inSummaryElement.textContent = `${income}€`;
+  
+  const out = transactionList
+    .filter(mov => mov < 0)
+    .reduce((acc, cur) => acc + cur, 0);
+  outSummaryElement.textContent = `${Math.abs(out)}€`;
+  // lets just assume that this bank pays out an interest each time that there is a deposit to the bank account 
+  // (interest = 1.2% of the deposited amount) 
+  const interest = transactionList 
+    .filter(mov => mov > 0)
+    .map(deposit => deposit * 0.012)
+    .filter(int => int >= 1)
+    .reduce((acc, cur) => acc + cur, 0);
+  interestSummaryElement.textContent = `${Math.abs(interest)}€`;
+};
+
+calcDisplaySummary(account1.transactions);
+
+
 // Displaying the Transactions in the DOM
 const transactionsContainer = document.querySelector(".transactions");
 
@@ -70,4 +107,4 @@ const displayTransactions = function(transactions) {
   });
 };
 
-displayTransactions(account1.transactions)
+displayTransactions(account1.transactions);
