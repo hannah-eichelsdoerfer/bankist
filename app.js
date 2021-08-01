@@ -1,3 +1,5 @@
+'use strict';
+
 // Data
 const account1 = {
   owner: 'Hannah Eichelsdoerfer',
@@ -49,7 +51,44 @@ const createUsernames = (accs) => {
   });
 };
 createUsernames(accounts);
-console.log(accounts);
+
+// Log-In Implementation
+const loginBtn = document.querySelector("#login-button");
+const loginUsernameElement = document.querySelector("#login-username");
+const loginPINelement = document.querySelector("#login-pin");
+
+let currentAccount;
+
+const welcomeParagraph = document.querySelector("#welcome")
+const bankingInterface = document.querySelector("main")
+const loginCredentials = document.querySelector("#login");
+const logoutBtn = document.querySelector("#logout-button");
+
+loginBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  currentAccount = accounts.find(acc => acc.username === loginUsernameElement.value);
+  if (currentAccount?.pin === Number(loginPINelement.value)) {
+    welcomeParagraph.textContent = `Welcome back, ${currentAccount.owner.split(" ")}`;
+    bankingInterface.style.opacity = 100;
+    loginCredentials.classList.add("hidden");
+    logoutBtn.classList.remove("hidden");
+    console.log(logoutBtn)
+    calcDisplayBalance(currentAccount.transactions);
+    displayTransactions(currentAccount.transactions);
+    calcDisplaySummary(currentAccount);
+  } else {
+    alert("Wrong Credentials!");
+  }
+});
+
+
+logoutBtn.addEventListener("click", () => {
+  logoutBtn.classList.add("hidden");
+  loginCredentials.classList.remove("hidden");
+  bankingInterface.style.opacity = 0;
+  loginUsernameElement.value = loginPINelement.value = "";
+});
+
 
 // Calculate and Display the Balance
 const balanceElement = document.querySelector("#balance-value");
@@ -58,35 +97,30 @@ const calcDisplayBalance = (transactions => {
   balanceElement.textContent = `${balance}€`
 });
 
-calcDisplayBalance(account1.transactions);
-
 // Summary Display
 const inSummaryElement = document.querySelector("#summary_value_income");
 const outSummaryElement = document.querySelector("#summary_value_outgoing");
 const interestSummaryElement = document.querySelector("#summary_value_interest");
 
-const calcDisplaySummary = (transactionList) => {
-  const income = transactionList
+const calcDisplaySummary = (account) => {
+  const income = account.transactions
     .filter(mov => mov > 0)
     .reduce((acc, cur) => acc + cur, 0);
   inSummaryElement.textContent = `${income}€`;
   
-  const out = transactionList
+  const out = account.transactions
     .filter(mov => mov < 0)
     .reduce((acc, cur) => acc + cur, 0);
   outSummaryElement.textContent = `${Math.abs(out)}€`;
   // lets just assume that this bank pays out an interest each time that there is a deposit to the bank account 
   // (interest = 1.2% of the deposited amount) 
-  const interest = transactionList 
+  const interest = account.transactions 
     .filter(mov => mov > 0)
-    .map(deposit => deposit * 0.012)
+    .map(deposit => (deposit * account.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, cur) => acc + cur, 0);
   interestSummaryElement.textContent = `${Math.abs(interest)}€`;
 };
-
-calcDisplaySummary(account1.transactions);
-
 
 // Displaying the Transactions in the DOM
 const transactionsContainer = document.querySelector(".transactions");
@@ -107,4 +141,3 @@ const displayTransactions = function(transactions) {
   });
 };
 
-displayTransactions(account1.transactions);
