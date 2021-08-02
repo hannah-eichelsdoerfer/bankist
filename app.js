@@ -85,7 +85,6 @@ logoutBtn.addEventListener("click", () => {
   logoutOrClose();
 });
 
-
 // Calculate and Display the Balance
 const balanceElement = document.querySelector("#balance-value");
 
@@ -122,10 +121,13 @@ const calcDisplaySummary = (account) => {
 // Displaying the Transactions in the DOM
 const transactionsContainer = document.querySelector(".transactions");
 
-const displayTransactions = function(transactions) {
+const displayTransactions = (transactions, sort = false) => {
   transactionsContainer.innerHTML = "";
+
+  // Sorting without modifying Array
+  const trans = sort ? transactions.slice().sort((a, b) => a-b) : transactions;
   
-  transactions.forEach((transaction, index) => {
+  trans.forEach((transaction, index) => {
     const transactionType = transaction > 0 ? "deposit" : "withdrawl"
     const transactionHTML = `
     <div class="transaction">
@@ -137,6 +139,15 @@ const displayTransactions = function(transactions) {
     transactionsContainer.insertAdjacentHTML('afterbegin', transactionHTML);
   });
 };
+
+// Sorting Transactions Implementation
+let sorted = false;
+document.querySelector("#sort-transactions").addEventListener("click", (e) => {
+  e.preventDefault();
+  displayTransactions(currentAccount.transactions, !sorted)
+  sorted = !sorted;
+});
+
 
 // Transfer money to another account
 const transferBtn = document.querySelector("#transfer-button");
