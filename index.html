@@ -15,6 +15,7 @@
     <h1>Bankist</h1>
     <p id="welcome">Log In to get started</p>
     <form id="login">
+      <button>Demo Mode</button>
       <input type="text" placeholder="user" id="login-username">
       <input type="password" placeholder="PIN" maxlength="4" id="login-pin">
       <button id="login-button">&rarr;</button>
@@ -36,12 +37,10 @@
         <h3>Transfer Money</h3>
         <form>
           <div>
-
             <input type="text" id="transfer-name-input">
             <input type="text" id="transfer-amount-input">
           </div>
           <div>
-
             <label for="transfer-name-input">Transfer to</label>
             <label for="transfer-amount-input">Transfer Amount</label>
           </div>
@@ -57,7 +56,14 @@
       </div>
       <div class="action close-account">
         <h3>Close Account</h3>
-      </div>
+        <form>
+          <input type="text" id="close-user-input">
+          <input type="text" id="close-pin-input">
+          <label for="close-user-input">Confirm User</label>
+          <label for="close-pin-input">Confirm Pin</label>
+          <button id="close-button">&rarr;</button>
+        </form>
+        </div>
     </div>
 
     <div class="summary">

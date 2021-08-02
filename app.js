@@ -31,16 +31,6 @@ const account4 = {
 
 const accounts = [account1, account2, account3, account4];
 
-// Computing Usernames
-// accounts.forEach(account => {
-//   account.username = account.owner
-//     .toLowerCase()
-//     .split(" ")
-//     .map(name => name[0]) // implicit return
-//     .join("");
-// });
-// console.log(accounts);
-
 const createUsernames = (accs) => {
   accs.forEach(acc => {
     acc.username = acc.owner
@@ -84,12 +74,17 @@ loginBtn.addEventListener("click", (event) => {
   }
 });
 
-logoutBtn.addEventListener("click", () => {
+const logoutOrClose = () => {
   logoutBtn.classList.add("hidden");
   loginCredentials.classList.remove("hidden");
   bankingInterface.classList.add("hidden");
   loginUsernameElement.value = loginPINelement.value = "";
+};
+
+logoutBtn.addEventListener("click", () => {
+  logoutOrClose();
 });
+
 
 // Calculate and Display the Balance
 const balanceElement = document.querySelector("#balance-value");
@@ -159,6 +154,37 @@ transferBtn.addEventListener("click", (event) => {
     updateStatements(currentAccount);
   } else {
     alert("Inputs not valid!")
+  }
+});
+
+// Get a Loan
+const getLoanBtn = document.querySelector("#loan-button");
+const inputLoanAmount = document.querySelector("#loan-amount-input")
+
+getLoanBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  const amount = Number(inputLoanAmount.value)
+  if (amount > 0 && currentAccount.transactions.some(transaction => transaction >= amount * 0.1)) {
+    currentAccount.transactions.push(amount);
+    updateStatements(currentAccount);
+    inputLoanAmount.value = "";
+  } else {
+    alert("Sorry, Loan can't be granted...");
+  }
+});
+
+// Close Account
+const inputCloseUsername = document.querySelector("#close-user-input");
+const inputClosePIN = document.querySelector("#close-pin-input");
+const closeBtn = document.querySelector("#close-button");
+
+closeBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  if (inputCloseUsername.value === currentAccount.username && Number(inputClosePIN.value) === currentAccount.pin) {
+    const index = accounts.findIndex(acc => acc.username === currentAccount.username)
+    accounts.splice(index, 1);
+    logoutOrClose();
+    inputCloseUsername.value = inputClosePIN.value = "";
   }
 });
 

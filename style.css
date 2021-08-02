@@ -17,7 +17,8 @@ nav {
   align-items: center;
   justify-content: space-between;
   /* background-color: rgb(160, 140, 140); */
-  padding: 15px 10px;
+  padding: 15px 20px;
+  color: #a9bbf5;
 }
 
 #logout-button {
@@ -37,9 +38,6 @@ nav h1 {
 main {
   margin: 0 auto;
   width: 80%;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  height: calc(100vh - 80px);
 }
 
 .hidden {
@@ -49,22 +47,20 @@ main {
 .account-balance {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 20px 0;
   font-size: 28px;
   font-weight: 600;
   grid-column: span 2;
 }
 
-.section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 
-.transactions {
-  border-radius: 15px;
-  flex: 1;
-  overflow-y: scroll;
+.transaction {
+  background-color: rgb(248, 248, 248);
+  padding: 35px 25px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  margin: 5px 0;
 }
 
 .action input {
@@ -103,20 +99,25 @@ button:focus {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.transaction {
-  background-color: rgb(248, 248, 248);
-  padding: 25px 15px;
-  display: flex;
-  justify-content: space-between;
-  margin: 2px;
-  border-radius: 10px;
+@media (min-width: 960px) {
+  main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: calc(100vh - 80px);
+  }
+  .transactions {
+    overflow-y: scroll;
+  }
+  .actions {
+    margin-left: 15px;
+  }
 }
+
 
 .actions {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: 15px;
   color: white;
   gap: 15px;
 }
@@ -125,17 +126,6 @@ button:focus {
   flex: 1;
   padding: 25px 40px;
   border-radius: 15px;
-}
-
-.action.loan {
-  background: #a9bbf5;
-}
-
-.action.transfer {
-  background: #a9bbf5;;
-}
-
-.action.close-account {
   background: #a9bbf5;
 }
 
