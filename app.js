@@ -64,37 +64,39 @@ const bankingInterface = document.querySelector("main")
 const loginCredentials = document.querySelector("#login");
 const logoutBtn = document.querySelector("#logout-button");
 
+const updateStatements = (acc) => {
+  calcDisplayBalance(currentAccount);
+  displayTransactions(currentAccount.transactions);
+  calcDisplaySummary(currentAccount);
+};
+
 loginBtn.addEventListener("click", (event) => {
   event.preventDefault();
   currentAccount = accounts.find(acc => acc.username === loginUsernameElement.value);
   if (currentAccount?.pin === Number(loginPINelement.value)) {
     welcomeParagraph.textContent = `Welcome back, ${currentAccount.owner.split(" ")}`;
-    bankingInterface.style.opacity = 100;
+    bankingInterface.classList.remove("hidden");
     loginCredentials.classList.add("hidden");
     logoutBtn.classList.remove("hidden");
-    console.log(logoutBtn)
-    calcDisplayBalance(currentAccount.transactions);
-    displayTransactions(currentAccount.transactions);
-    calcDisplaySummary(currentAccount);
+    updateStatements(currentAccount);
   } else {
     alert("Wrong Credentials!");
   }
 });
 
-
 logoutBtn.addEventListener("click", () => {
   logoutBtn.classList.add("hidden");
   loginCredentials.classList.remove("hidden");
-  bankingInterface.style.opacity = 0;
+  bankingInterface.classList.add("hidden");
   loginUsernameElement.value = loginPINelement.value = "";
 });
 
-
 // Calculate and Display the Balance
 const balanceElement = document.querySelector("#balance-value");
-const calcDisplayBalance = (transactions => {
-  const balance = transactions.reduce((acc, transaction) => acc + transaction, 0);
-  balanceElement.textContent = `${balance}€`
+
+const calcDisplayBalance = (acc => {
+  acc.balance = acc.transactions.reduce((acc, transaction) => acc + transaction, 0);
+  balanceElement.textContent = `${acc.balance}€`;
 });
 
 // Summary Display
@@ -126,7 +128,7 @@ const calcDisplaySummary = (account) => {
 const transactionsContainer = document.querySelector(".transactions");
 
 const displayTransactions = function(transactions) {
-  // transactionsContainer.innerHTML = "";
+  transactionsContainer.innerHTML = "";
   
   transactions.forEach((transaction, index) => {
     const transactionType = transaction > 0 ? "deposit" : "withdrawl"
@@ -140,4 +142,23 @@ const displayTransactions = function(transactions) {
     transactionsContainer.insertAdjacentHTML('afterbegin', transactionHTML);
   });
 };
+
+// Transfer money to another account
+const transferBtn = document.querySelector("#transfer-button");
+const transferReceiverInput = document.querySelector("#transfer-name-input");
+const transferAmountInput = document.querySelector("#transfer-amount-input");
+
+transferBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  const amount = Number(transferAmountInput.value);
+  const receiver = accounts.find(acc => acc.username === transferReceiverInput.value);
+  transferAmountInput.value = transferReceiverInput.value = "";
+  if (receiver && amount > 0 && currentAccount.balance >= amount && receiver?.username !== currentAccount.username) {
+    receiver.transactions.push(amount);
+    currentAccount.transactions.push(-amount);
+    updateStatements(currentAccount);
+  } else {
+    alert("Inputs not valid!")
+  }
+});
 

@@ -5,29 +5,41 @@
 }
 
 body {
-  background-color: #f3f3f3;
+  background: white;
   color: #333333;
   font-family: 'Raleway', sans-serif;
-  height: 100vh;
   transition: all 1s;
+  height: 100vh;
 }
 
 nav {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   /* background-color: rgb(160, 140, 140); */
   padding: 15px 10px;
+}
+
+#logout-button {
+  border: none;
+  background-color: inherit;
+  padding: 5px 10px;
+  border-radius: 25px;
+  border: 1px solid #c9d6ff;
+  color: #c9d6ff;
+  font-weight: 500;
+}
+
+nav h1 {
+  color: #c9d6ff;
 }
 
 main {
   margin: 0 auto;
   width: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: calc(100vh - 100px);
-  flex-wrap: wrap;
-  opacity: 0;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  height: calc(100vh - 80px);
 }
 
 .hidden {
@@ -36,16 +48,59 @@ main {
 
 .account-balance {
   display: flex;
-  flex: 0 0 100%;
   justify-content: space-between;
+  margin: 10px 0;
+  font-size: 28px;
+  font-weight: 600;
+  grid-column: span 2;
+}
+
+.section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .transactions {
-  background-color: rgb(231, 231, 231);
-  width: 60%;
   border-radius: 15px;
-  padding: 10px;
-  overflow: hidden;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.action input {
+  width: 40%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.4);
+  font-family: inherit;
+  line-height: 1.5rem;
+  text-align: center;
+  color: #333;
+  padding: 0.3rem 1rem;
+  border-radius: 0.7rem;
+  transition: all 0.3s;
+}
+
+form input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+form button {
+  border: none;
+  border-radius: 0.7rem;
+  background-color: transparent;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.action button {
+  color: white;
+}
+
+button:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .transaction {
@@ -58,18 +113,44 @@ main {
 }
 
 .actions {
-  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 15px;
+  color: white;
+  gap: 15px;
 }
 
 .action {
-  border: 1px solid grey;
+  flex: 1;
+  padding: 25px 40px;
+  border-radius: 15px;
+}
+
+.action.loan {
+  background: #a9bbf5;
+}
+
+.action.transfer {
+  background: #a9bbf5;;
+}
+
+.action.close-account {
+  background: #a9bbf5;
+}
+
+.summary {
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 footer {
-  text-align: center;
   font-size: 10px;
   position: fixed;
   bottom: 0;
+  right: 10px;
   padding: 10px;
-  width: 100%;
+  color: #c9d6ff;
 }

@@ -22,27 +22,44 @@
     <button id="logout-button" class="hidden">Logout &rarr;</button>
   </nav>
 
-  <main>
+  <main class="hidden">
     <div class="account-balance">
       <p>Current Balance</p>
       <p id="balance-value">0000€</p>
     </div>
 
     <div class="transactions">
-
     </div>
-
+  
     <div class="actions">
       <div class="action transfer">
         <h3>Transfer Money</h3>
+        <form>
+          <div>
+
+            <input type="text" id="transfer-name-input">
+            <input type="text" id="transfer-amount-input">
+          </div>
+          <div>
+
+            <label for="transfer-name-input">Transfer to</label>
+            <label for="transfer-amount-input">Transfer Amount</label>
+          </div>
+          <button id="transfer-button">&rarr;</button>
+        </form>
       </div>
       <div class="action loan">
         <h3>Loan</h3>
+        <form>
+          <input type="text" id="loan-amount-input">
+          <button id="loan-button">&rarr;</button>
+        </form>
       </div>
       <div class="action close-account">
         <h3>Close Account</h3>
       </div>
     </div>
+
     <div class="summary">
       <p>In <span id="summary_value_income">0000€</span></p>
       <p>Out <span id="summary_value_outgoing">0000€</span></p>
@@ -51,8 +68,12 @@
   </main>
 
   <footer>
-    <p>Built inspired by &copy; by Jonas Schmedtmann's JavaScript Course.</p>
-    <p>Redesigned and restructured myself &copy; Hannah Eichelsdoerfer</p>
+    <button>&copy;</button>
+    <div class="hidden">
+
+      <p>Built inspired by &copy; by Jonas Schmedtmann's JavaScript Course.</p>
+      <p>Redesigned and restructured myself &copy; Hannah Eichelsdoerfer</p>    
+    </div>
   </footer>
   <script src="app.js"></script>
 </body>
