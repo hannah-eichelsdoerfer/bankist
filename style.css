@@ -18,7 +18,11 @@ nav {
   justify-content: space-between;
   /* background-color: rgb(160, 140, 140); */
   padding: 15px 20px;
-  color: #a9bbf5;
+  /* color: #a9bbf5; */
+}
+
+nav h1 {
+  color: #89a89c;
 }
 
 #logout-button {
@@ -29,10 +33,6 @@ nav {
   border: 1px solid #c9d6ff;
   color: #c9d6ff;
   font-weight: 500;
-}
-
-nav h1 {
-  color: #c9d6ff;
 }
 
 main {
@@ -53,7 +53,6 @@ main {
   grid-column: span 2;
 }
 
-
 .transaction {
   background-color: rgb(248, 248, 248);
   padding: 35px 25px;
@@ -61,6 +60,24 @@ main {
   justify-content: space-between;
   border-radius: 10px;
   margin: 5px 0;
+}
+
+.transaction_type {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: #fff;
+  padding: 0.1rem 1rem;
+  border-radius: 10rem;
+  margin-right: 2rem;
+}
+
+.transaction_type.deposit {
+  background-image: linear-gradient(to top left, #89a89c, #a3b396);
+}
+
+.transaction_type.withdrawl {
+  background-image: linear-gradient(to top left, #b16175, #e4696f);
 }
 
 .action input {
@@ -113,7 +130,6 @@ button:focus {
   }
 }
 
-
 .actions {
   display: flex;
   flex-direction: column;
@@ -127,6 +143,18 @@ button:focus {
   padding: 25px 40px;
   border-radius: 15px;
   background: #a9bbf5;
+}
+
+.action.transfer {
+  background-image: linear-gradient(to top left, #b16175, #e4696f);
+}
+
+.action.loan {
+  background-image: linear-gradient(to top left, #89a89c, #a3b396);
+}
+
+.action.close-account {
+  background-image: linear-gradient(to top left, #dfdfdf, #cecece);
 }
 
 .summary {
